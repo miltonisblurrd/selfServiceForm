@@ -36,27 +36,27 @@ export function PricingSummary() {
   }
 
   return (
-    <aside className="fixed right-0 top-0 h-screen w-96 bg-white border-l border-gray-200 p-8 hidden lg:block overflow-y-auto">
+    <aside className="fixed right-0 top-0 h-screen w-96 bg-white border-l-2 border-gray-300 p-8 hidden lg:block overflow-y-auto">
       <div className="space-y-6">
-        <h3 className="text-lg font-semibold text-gray-900">Resume</h3>
+        <h3 className="text-heading font-mono font-semibold text-foreground">Resume</h3>
 
         <div>
-          <div className="text-4xl font-bold text-gray-900">
+          <div className="text-5xl font-mono font-bold text-foreground">
             ${summary.total.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-600 mt-1">
+          <div className="text-body font-mono text-text mt-1">
             {summary.items.some(i => i.price > 0) && 'in prepaid hours'}
           </div>
         </div>
 
         {summary.hasAllPackagesSelected && (
-          <div className="text-sm text-gray-700">
+          <div className="text-body font-mono text-text">
             Ready to start. Estimated{' '}
             {summary.items[0]?.timeline || '1 Week'}
           </div>
         )}
 
-        <div className="space-y-3 pt-4 border-t border-gray-200">
+        <div className="space-y-3 pt-4 border-t-2 border-gray-200">
           {summary.items.map((item) => (
             <div key={item.serviceId} className="flex items-start gap-2">
               <div className="text-green-500 mt-0.5">
@@ -65,11 +65,11 @@ export function PricingSummary() {
                 </svg>
               </div>
               <div className="flex-1">
-                <div className="text-sm font-medium text-gray-900">
+                <div className="text-body font-mono font-semibold text-foreground">
                   {item.packageName} {item.serviceName}
                 </div>
                 {item.price > 0 && (
-                  <div className="text-sm text-gray-600">
+                  <div className="text-body font-mono text-text">
                     ${item.price.toLocaleString()}
                   </div>
                 )}
@@ -78,14 +78,14 @@ export function PricingSummary() {
           ))}
         </div>
 
-        <div className="pt-6 space-y-2 text-sm">
-          <a href="#" className="text-gray-600 hover:text-gray-900 flex items-center gap-1">
+        <div className="pt-6 space-y-2 text-body font-mono">
+          <a href="#" className="text-text hover:text-foreground flex items-center gap-1">
             How does the payment process work?
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </a>
-          <a href="#" className="text-gray-600 hover:text-gray-900 flex items-center gap-1">
+          <a href="#" className="text-text hover:text-foreground flex items-center gap-1">
             How is the timeline of work?
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

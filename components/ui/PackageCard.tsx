@@ -30,7 +30,7 @@ export function PackageCard({
       className={`relative p-6 rounded-lg border-2 transition-all cursor-pointer ${
         isSelected
           ? 'border-green-500 bg-green-50'
-          : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
+          : 'border-gray-300 bg-white hover:border-foreground hover:shadow-sm'
       }`}
     >
       {isSelected && (
@@ -42,20 +42,20 @@ export function PackageCard({
       )}
 
       <div className="flex items-center gap-2 mb-4">
-        <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 text-text" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        <span className="text-sm font-medium text-gray-700">{name}</span>
+        <span className="text-base font-mono font-semibold text-foreground">{name}</span>
       </div>
 
-      <div className="text-3xl font-bold text-gray-900 mb-1">
+      <div className="text-3xl font-mono font-bold text-foreground mb-1">
         ${price.toLocaleString()}
       </div>
       {prepaidHours && (
-        <div className="text-sm text-gray-600 mb-4">in prepaid hours</div>
+        <div className="text-sm font-mono text-text mb-4">in prepaid hours</div>
       )}
 
-      <div className="text-sm text-gray-700 mb-6">
+      <div className="text-sm font-mono text-text mb-6">
         Ready to start. Estimated {timeline}
       </div>
 
@@ -65,12 +65,12 @@ export function PackageCard({
             e.stopPropagation();
             setShowIncluded(!showIncluded);
           }}
-          className="w-full text-left text-sm font-medium text-gray-900 hover:text-gray-700"
+          className="w-full text-left text-sm font-mono font-semibold text-foreground hover:opacity-80"
         >
           What is included?
         </button>
         {showIncluded && (
-          <ul className="text-sm text-gray-700 space-y-2 pl-4">
+          <ul className="text-sm font-mono text-text space-y-2 pl-4">
             {included.map((item, i) => (
               <li key={i} className="list-disc">{item}</li>
             ))}
@@ -82,12 +82,12 @@ export function PackageCard({
             e.stopPropagation();
             setShowNotIncluded(!showNotIncluded);
           }}
-          className="w-full text-left text-sm font-medium text-gray-900 hover:text-gray-700"
+          className="w-full text-left text-sm font-mono font-semibold text-foreground hover:opacity-80"
         >
           What is not included
         </button>
         {showNotIncluded && (
-          <ul className="text-sm text-gray-700 space-y-2 pl-4">
+          <ul className="text-sm font-mono text-text space-y-2 pl-4">
             {notIncluded.map((item, i) => (
               <li key={i} className="list-disc">{item}</li>
             ))}

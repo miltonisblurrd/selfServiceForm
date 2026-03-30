@@ -9,8 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "#FBFAF6",
+        foreground: "#003399",
+        text: "#7a7a7a",
+      },
+      fontFamily: {
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      fontSize: {
+        body: ['22px', { lineHeight: '32px' }],
+        heading: ['28px', { lineHeight: '39px' }],
       },
     },
   },

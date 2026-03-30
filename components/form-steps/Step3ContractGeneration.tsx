@@ -5,6 +5,7 @@ import { services } from '@/config/services';
 import { Input } from '../ui/Input';
 import { Checkbox } from '../ui/Checkbox';
 import { Button } from '../ui/Button';
+import { PricingSummaryInline } from '../PricingSummaryInline';
 import { useState } from 'react';
 
 export function Step3ContractGeneration() {
@@ -35,7 +36,6 @@ export function Step3ContractGeneration() {
 
   const handleGenerateContract = async () => {
     setIsSubmitting(true);
-    // TODO: Wire up PDF generation, email, and payment redirect
     alert('Contract generation will be wired up next! For now, this is just the UI.');
     setIsSubmitting(false);
   };
@@ -49,11 +49,11 @@ export function Step3ContractGeneration() {
     contractDetails.companyLegalName;
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center gap-4">
+    <div className="space-y-12">
+      <div className="flex items-center gap-4 mb-8">
         <button
           onClick={prevStep}
-          className="text-gray-600 hover:text-gray-900 flex items-center gap-2"
+          className="text-text hover:text-foreground flex items-center gap-2 text-base font-mono"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -63,26 +63,26 @@ export function Step3ContractGeneration() {
       </div>
 
       <div>
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">
+        <h2 className="text-heading font-mono font-semibold text-foreground mb-4">
           Contract self-service
         </h2>
-        <p className="text-gray-600">
+        <p className="text-base font-mono text-text mb-6">
           Send yourself a ${totalPrice.toLocaleString()} contract for the list service below:
         </p>
+        
+        <div className="space-y-2 mb-8">
+          {selectedItems.map((item, i) => (
+            <div key={i} className="flex items-center gap-2 text-base font-mono text-text">
+              <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              {item.packageName} {item.serviceName}
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="space-y-2">
-        {selectedItems.map((item, i) => (
-          <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
-            <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            {item.packageName} {item.serviceName}
-          </div>
-        ))}
-      </div>
-
-      <div className="bg-white p-6 rounded-lg border border-gray-200">
+      <div className="bg-white p-6 rounded-lg border-2 border-gray-300">
         <Checkbox
           label="I'm the signer"
           checked={isUserTheSigner}
@@ -95,10 +95,10 @@ export function Step3ContractGeneration() {
         />
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-2 gap-12">
         {/* Your Details */}
         <div className="space-y-6">
-          <h3 className="text-xl font-semibold text-gray-900">Your Details</h3>
+          <h3 className="text-xl font-mono font-semibold text-foreground mb-6">Your Details</h3>
           <Input
             label="Your Full Name"
             value={userDetails.fullName}
@@ -123,7 +123,7 @@ export function Step3ContractGeneration() {
 
         {/* Contract Details */}
         <div className="space-y-6">
-          <h3 className="text-xl font-semibold text-gray-900">Contract Details</h3>
+          <h3 className="text-xl font-mono font-semibold text-foreground mb-6">Contract Details</h3>
           <Input
             label="Signers Name"
             value={contractDetails.signersName}
@@ -163,17 +163,15 @@ export function Step3ContractGeneration() {
       </div>
 
       {/* Trust Badges */}
-      <div className="flex justify-center gap-6 pt-6">
-        <div className="text-gray-400 text-sm font-semibold">Wized</div>
-        <div className="text-gray-400 text-sm font-semibold">Webflow</div>
-        <div className="text-gray-400 text-sm font-semibold">HubSpot</div>
-        <div className="text-gray-400 text-sm font-semibold">PandaDoc</div>
+      <div className="flex justify-center gap-8 pt-8 pb-4">
+        <div className="text-text text-base font-mono font-semibold opacity-60">Wized</div>
+        <div className="text-text text-base font-mono font-semibold opacity-60">Webflow</div>
+        <div className="text-text text-base font-mono font-semibold opacity-60">HubSpot</div>
+        <div className="text-text text-base font-mono font-semibold opacity-60">PandaDoc</div>
       </div>
 
-      <div className="flex justify-between pt-6">
-        <Button onClick={prevStep} variant="secondary">
-          Back
-        </Button>
+      <div className="flex justify-between items-center pt-8">
+        <PricingSummaryInline />
         <Button
           onClick={handleGenerateContract}
           disabled={!isFormValid || isSubmitting}

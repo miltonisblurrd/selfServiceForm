@@ -13,10 +13,10 @@ export function Button({
   type?: 'button' | 'submit';
   className?: string;
 }) {
-  const baseStyles = 'px-6 py-3 rounded-lg font-medium transition-all';
+  const baseStyles = 'px-8 py-3 rounded-lg font-mono font-semibold transition-all text-base';
   const variants = {
-    primary: 'bg-black text-white hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed',
-    secondary: 'bg-white text-gray-900 border border-gray-300 hover:bg-gray-50',
+    primary: 'bg-foreground text-white hover:opacity-90 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed',
+    secondary: 'bg-white text-foreground border-2 border-foreground hover:bg-foreground hover:text-white',
   };
 
   return (

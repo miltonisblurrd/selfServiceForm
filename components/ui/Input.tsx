@@ -20,7 +20,7 @@ export function Input({
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-mono font-semibold text-foreground mb-2">
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
@@ -32,11 +32,11 @@ export function Input({
         placeholder={placeholder}
         required={required}
         disabled={disabled}
-        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all ${
+        className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-foreground transition-all font-mono text-base ${
           error ? 'border-red-500' : 'border-gray-300'
-        } ${disabled ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
+        } ${disabled ? 'bg-gray-100 text-text cursor-not-allowed' : 'text-foreground bg-white'}`}
       />
-      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+      {error && <p className="mt-1 text-sm font-mono text-red-500">{error}</p>}
     </div>
   );
 }

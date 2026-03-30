@@ -4,6 +4,7 @@ import { useFormStore } from '@/store/form-store';
 import { services } from '@/config/services';
 import { PackageCard } from '../ui/PackageCard';
 import { Button } from '../ui/Button';
+import { PricingSummaryInline } from '../PricingSummaryInline';
 
 export function Step2PackageSelection() {
   const selectedServiceIds = useFormStore((state) => state.selectedServiceIds);
@@ -22,10 +23,10 @@ export function Step2PackageSelection() {
 
   return (
     <div className="space-y-12">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mb-8">
         <button
           onClick={prevStep}
-          className="text-gray-600 hover:text-gray-900 flex items-center gap-2"
+          className="text-text hover:text-foreground flex items-center gap-2 text-base font-mono"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -37,15 +38,15 @@ export function Step2PackageSelection() {
       {selectedServices.map((service) => (
         <div key={service.id} className="space-y-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <h2 className="text-heading font-mono font-semibold text-foreground mb-4">
               {service.name}
             </h2>
-            <p className="text-gray-600 text-sm max-w-3xl">
+            <p className="text-base font-mono text-text max-w-3xl leading-relaxed">
               {service.description}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-6">
             {service.packages.map((pkg) => (
               <PackageCard
                 key={pkg.id}
@@ -63,12 +64,10 @@ export function Step2PackageSelection() {
         </div>
       ))}
 
-      <div className="flex justify-between pt-6">
-        <Button onClick={prevStep} variant="secondary">
-          Back
-        </Button>
+      <div className="flex justify-between items-center pt-8">
+        <PricingSummaryInline />
         <Button onClick={nextStep} disabled={!canContinue}>
-          Continue
+          Next →
         </Button>
       </div>
     </div>

@@ -10,20 +10,21 @@ import { services } from '@/config/services';
 export default function SelfServePage() {
   return (
     <FormProvider>
-      <div className="flex min-h-screen bg-gray-50">
-        {/* Left Sidebar - Hidden on mobile */}
+      <div className="flex min-h-screen bg-background">
+        {/* Left Sidebar - Slimmer */}
         <Sidebar />
         
-        {/* Main Content - Full width on mobile, constrained on desktop */}
-        <main className="flex-1 lg:ml-80 lg:mr-96 p-4 md:p-8">
-          <MultiStepForm />
+        {/* Main Content - Clean 2 column layout */}
+        <main className="flex-1 lg:ml-64 p-8 lg:p-12">
+          <div className="max-w-5xl mx-auto">
+            <MultiStepForm />
+          </div>
         </main>
         
-        {/* Right Sticky Sidebar - Hidden on mobile */}
-        <PricingSummary />
+        {/* Right Sticky Sidebar removed - pricing is part of main content now */}
         
-        {/* Mobile Pricing Summary - Shows at bottom on mobile */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg">
+        {/* Mobile Pricing Summary */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-300 p-4 shadow-lg">
           <MobilePricingSummary />
         </div>
       </div>
@@ -47,10 +48,10 @@ function MobilePricingSummary() {
   return (
     <div className="flex items-center justify-between">
       <div>
-        <div className="text-2xl font-bold text-gray-900">
+        <div className="text-3xl font-mono font-bold text-foreground">
           ${total.toLocaleString()}
         </div>
-        <div className="text-sm text-gray-600">Total</div>
+        <div className="text-body font-mono text-text">Total</div>
       </div>
     </div>
   );

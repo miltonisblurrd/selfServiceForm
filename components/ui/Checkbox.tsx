@@ -22,7 +22,7 @@ export function Checkbox({
           className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-all ${
             checked
               ? 'bg-green-500 border-green-500'
-              : 'border-gray-300 group-hover:border-gray-400'
+              : 'border-gray-300 group-hover:border-foreground'
           }`}
         >
           {checked && (
@@ -33,8 +33,8 @@ export function Checkbox({
         </div>
       </div>
       <div className="flex-1">
-        <span className="text-sm font-medium text-gray-900">{label}</span>
-        {description && <p className="text-sm text-gray-600 mt-1">{description}</p>}
+        <span className="text-base font-mono font-semibold text-foreground">{label}</span>
+        {description && <p className="text-base font-mono text-text mt-1">{description}</p>}
       </div>
     </label>
   );

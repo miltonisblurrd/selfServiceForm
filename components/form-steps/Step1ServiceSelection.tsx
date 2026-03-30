@@ -4,6 +4,7 @@ import { useFormStore } from '@/store/form-store';
 import { services } from '@/config/services';
 import { ServiceCard } from '../ui/ServiceCard';
 import { Button } from '../ui/Button';
+import { PricingSummaryInline } from '../PricingSummaryInline';
 
 export function Step1ServiceSelection() {
   const selectedServiceIds = useFormStore((state) => state.selectedServiceIds);
@@ -13,17 +14,17 @@ export function Step1ServiceSelection() {
   const canContinue = selectedServiceIds.length > 0;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       <div>
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">
+        <h2 className="text-heading font-mono font-semibold text-foreground mb-4">
           Select the services you need
         </h2>
-        <p className="text-gray-600">
-          More details of each service will be shown in the next steps
+        <p className="text-base font-mono text-text">
+          More details of each service will be show in the next steps
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-6">
         {services.map((service) => (
           <ServiceCard
             key={service.id}
@@ -35,9 +36,10 @@ export function Step1ServiceSelection() {
         ))}
       </div>
 
-      <div className="flex justify-end pt-6">
+      <div className="flex justify-between items-center pt-8">
+        <PricingSummaryInline />
         <Button onClick={nextStep} disabled={!canContinue}>
-          Continue
+          Next →
         </Button>
       </div>
     </div>
