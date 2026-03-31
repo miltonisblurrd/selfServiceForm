@@ -1,4 +1,6 @@
-import type { NextConfig } from "next";
-import { defineCloudflareConfig } from "@opennextjs/cloudflare";
+import type { OpenNextConfig } from '@opennextjs/cloudflare';
+import { defineCloudflareConfig } from '@opennextjs/cloudflare';
 
-export default defineCloudflareConfig({});
+export default defineCloudflareConfig({
+  // OpenNext configuration for Webflow Cloud
+});
