@@ -9,6 +9,7 @@ import { Button } from '../ui/Button';
 import { PricingSummaryInline } from '../PricingSummaryInline';
 import { useState } from 'react';
 import { MuxVideoPlayer } from '../MuxVideoPlayer';
+import { generateContractPDF, downloadPDF, type ContractData } from '../ContractPDF';
 
 export function Step3ContractGeneration() {
   const prevStep = useFormStore((state) => state.prevStep);
@@ -22,6 +23,8 @@ export function Step3ContractGeneration() {
   const setIsUserTheSigner = useFormStore((state) => state.setIsUserTheSigner);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPaymentLink, setShowPaymentLink] = useState(false);
+  const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
 
   const selectedItems = selectedServiceIds.map((serviceId) => {
     const service = services.find((s) => s.id === serviceId);
@@ -38,8 +41,99 @@ export function Step3ContractGeneration() {
 
   const handleGenerateContract = async () => {
     setIsSubmitting(true);
-    alert('Contract generation will be wired up next! For now, this is just the UI.');
-    setIsSubmitting(false);
+    try {
+      // Build form data for PDF
+      const contractData: ContractData = {
+        selectedServiceIds,
+        selectedPackages,
+        clientInfo: {
+          name: userDetails.fullName,
+          email: userDetails.email,
+          company: contractDetails.companyName,
+          phone: '',
+        },
+        projectInfo: {
+          projectName: contractDetails.companyName,
+          description: `Self-service project for ${selectedServiceIds.length} service(s)`,
+        },
+        signerInfo: {
+          name: contractDetails.signersName,
+          email: isUserTheSigner ? userDetails.email : '',
+          title: '',
+        },
+        signatureDate: new Date().toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }),
+      };
+
+      // Generate PDF
+      const blob = await generateContractPDF(contractData);
+      const filename = `BlurrdStudio_Contract_${Date.now()}.pdf`;
+      
+      // Download PDF locally
+      downloadPDF(blob, filename);
+
+      // Convert blob to base64 for email
+      const arrayBuffer = await blob.arrayBuffer();
+      const base64 = Buffer.from(arrayBuffer).toString('base64');
+
+      // Get service names for email
+      const serviceNames = selectedServiceIds.map(serviceId => {
+        const service = services.find(s => s.id === serviceId);
+        const packageId = selectedPackages[serviceId];
+        const pkg = service?.packages.find(p => p.id === packageId);
+        return `${pkg?.name} ${service?.name}`;
+      });
+
+      // Send contract via email
+      const emailResponse = await fetch('/self-service-project-request/api/send-contract', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: userDetails.email,
+          clientName: userDetails.fullName,
+          companyName: contractDetails.companyName,
+          services: serviceNames,
+          totalAmount: totalPrice,
+          pdfBase64: base64,
+        }),
+      });
+
+      if (!emailResponse.ok) {
+        console.error('Email send failed:', await emailResponse.text());
+        throw new Error('Failed to send contract email');
+      }
+
+      // Create Stripe payment link
+      const paymentResponse = await fetch('/self-service-project-request/api/create-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: totalPrice,
+          clientName: userDetails.fullName,
+          clientEmail: userDetails.email,
+          companyName: contractDetails.companyName,
+          services: serviceNames,
+        }),
+      });
+
+      if (!paymentResponse.ok) {
+        console.error('Payment link creation failed:', await paymentResponse.text());
+        throw new Error('Failed to create payment link');
+      }
+
+      const paymentData = await paymentResponse.json();
+      setPaymentUrl(paymentData.paymentUrl);
+      setShowPaymentLink(true);
+
+    } catch (error) {
+      console.error('Error generating contract:', error);
+      alert(`Failed to generate contract: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const isFormValid =
@@ -174,12 +268,33 @@ export function Step3ContractGeneration() {
           <div className="pt-4">
             <PricingSummaryInline />
             <div className="mt-6">
-              <Button
-                onClick={handleGenerateContract}
-                disabled={!isFormValid || isSubmitting}
-              >
-                {isSubmitting ? 'Generating...' : 'Generate Contract'}
-              </Button>
+              {!showPaymentLink ? (
+                <Button
+                  onClick={handleGenerateContract}
+                  disabled={!isFormValid || isSubmitting}
+                >
+                  {isSubmitting ? 'Generating...' : 'Generate Contract'}
+                </Button>
+              ) : (
+                <div className="space-y-4">
+                  <div className="bg-green-50 border-2 border-green-500 rounded-lg p-4">
+                    <p className="text-sm font-mono text-green-700 mb-2">
+                      ✓ Contract generated and sent to {userDetails.email}
+                    </p>
+                    <p className="text-xs font-mono text-green-600">
+                      Check your email for the PDF contract.
+                    </p>
+                  </div>
+                  
+                  {paymentUrl && (
+                    <Button
+                      onClick={() => window.open(paymentUrl, '_blank')}
+                    >
+                      Proceed to Payment →
+                    </Button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
