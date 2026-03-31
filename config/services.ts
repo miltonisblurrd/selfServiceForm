@@ -2,71 +2,104 @@ import { Service } from '@/types/form';
 
 export const services: Service[] = [
   {
-    id: 'seo-aeo',
-    name: 'SEO & AEO',
-    description: 'You\'ll receive a comprehensive audit of your website. This will include: 1) A report of all technical issues in your site, 2) A list of solutions (how you can fix those technical issues) and why those are important to fix, 3) Tips on how to contextualize your site and improve interlinking. We\'ll deliver this with a custom Loom video where we\'ll review your report. Turnaround is 1 week from signup.',
-    icon: '🔍',
+    id: 'brand-identity',
+    name: 'Brand Identity and Kits',
+    description: 'Complete brand identity packages including logo design, color palettes, typography, and brand guidelines.',
+    icon: '🎨',
+    disabled: false,
     packages: [
       {
-        id: '1-week',
-        name: '1 Week',
-        price: 1500,
-        timeline: '1 Week',
+        id: 'starter',
+        name: 'Starter',
+        price: 2500,
+        timeline: '2 Weeks',
         prepaidHours: true,
         included: [
-          'A report of all technical issues in your site',
-          'A list of solutions (how you can fix those technical issues)',
-          'Tips on how to contextualize your site and improve interlinking',
-          'Custom Loom video where we\'ll review your report'
+          'Logo design with 3 concepts',
+          'Color palette development',
+          'Typography selection',
+          'Basic brand guidelines PDF'
         ],
         notIncluded: [
-          'Implementation of the fixes'
+          'Website design',
+          'Marketing materials'
+        ]
+      },
+      {
+        id: 'complete',
+        name: 'Complete',
+        price: 5000,
+        timeline: '3-4 Weeks',
+        prepaidHours: true,
+        included: [
+          'Logo design with 5+ concepts',
+          'Complete color system',
+          'Typography system',
+          'Comprehensive brand guidelines',
+          'Business card templates',
+          'Social media templates'
+        ],
+        notIncluded: [
+          'Website development',
+          'Ongoing support'
         ]
       }
     ]
   },
   {
-    id: 'technical-problem-solving',
-    name: 'Technical Problem Solving',
-    description: 'Get expert help solving complex technical challenges in your project.',
-    icon: '🛠️',
+    id: 'web-product-design',
+    name: 'Web and Product Design',
+    description: 'UI/UX design for websites and digital products, from wireframes to high-fidelity prototypes.',
+    icon: '🖼️',
+    disabled: false,
     packages: [
       {
-        id: 'hourly-support',
-        name: 'Hourly Support',
-        price: 150,
-        timeline: 'Flexible',
+        id: 'landing-page',
+        name: 'Landing Page',
+        price: 3000,
+        timeline: '2 Weeks',
         prepaidHours: true,
         included: [
-          'Direct access to technical experts',
-          'Problem diagnosis and solution recommendations',
-          'Code review and optimization suggestions',
-          'Documentation of solutions provided'
+          'Wireframes and user flows',
+          'High-fidelity mockups',
+          'Responsive design (mobile/tablet/desktop)',
+          'Interactive prototype',
+          'Design system tokens'
         ],
         notIncluded: [
-          'Long-term project management',
-          'Full application development'
+          'Development/implementation',
+          'Content writing'
         ]
       },
       {
-        id: 'project-package',
-        name: 'Project Package',
-        price: 5000,
-        timeline: '2-4 Weeks',
-        prepaidHours: false,
+        id: 'full-website',
+        name: 'Full Website',
+        price: 8000,
+        timeline: '4-6 Weeks',
+        prepaidHours: true,
         included: [
-          'Full project scope analysis',
-          'Complete technical implementation',
-          'Testing and quality assurance',
-          'Documentation and handoff',
-          '2 weeks of post-launch support'
+          'Complete site architecture',
+          'Wireframes for all pages',
+          'High-fidelity designs',
+          'Responsive design system',
+          'Interactive prototype',
+          'Component library'
         ],
         notIncluded: [
-          'Ongoing maintenance after support period',
-          'Third-party service costs'
+          'Development/implementation',
+          'SEO optimization'
         ]
       }
     ]
+  },
+  {
+    id: 'web-product-development',
+    name: 'Web and Product Development',
+    description: 'Full-stack development services for web applications and digital products.',
+    icon: '💻',
+    disabled: true,
+    disabledMessage: 'Dev Services can not be self generated. Requires meetings for technical discussions.',
+    packages: []
   }
 ];
 

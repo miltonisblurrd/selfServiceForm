@@ -4,6 +4,8 @@ export interface Service {
   description: string;
   icon: string;
   packages: Package[];
+  disabled?: boolean;
+  disabledMessage?: string;
 }
 
 export interface Package {

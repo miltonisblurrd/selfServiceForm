@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  basePath: '/self-serve',
-  assetPrefix: '/self-serve',
+  basePath: '/self-service-project-request',
+  assetPrefix: '/self-service-project-request',
 };
 
 export default nextConfig;

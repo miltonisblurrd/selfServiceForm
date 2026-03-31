@@ -36,18 +36,18 @@ export function PricingSummaryInline() {
   }
 
   return (
-    <div className="flex items-center gap-8">
+    <div className="flex items-center gap-4">
       <div>
-        <div className="text-4xl font-mono font-bold text-foreground">
+        <div className="text-lg font-mono font-bold text-foreground">
           ${summary.total.toLocaleString()}
         </div>
-        <div className="text-sm font-mono text-text">
+        <div className="text-xs font-mono text-text">
           {summary.items.some(i => i.price > 0) && 'in prepaid hours'}
         </div>
       </div>
       
       {summary.hasAllPackagesSelected && (
-        <div className="text-sm font-mono text-text">
+        <div className="text-xs font-mono text-text">
           Ready to start. Estimated{' '}
           {summary.items[0]?.timeline || '1 Week'}
         </div>

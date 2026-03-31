@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+
 export function Button({
   children,
   onClick,
@@ -13,10 +17,11 @@ export function Button({
   type?: 'button' | 'submit';
   className?: string;
 }) {
-  const baseStyles = 'px-8 py-3 rounded-lg font-mono font-semibold transition-all text-base';
+  const [isHovered, setIsHovered] = useState(false);
+  const baseStyles = 'px-6 py-2 rounded-lg font-mono transition-all cursor-pointer shadow-[2px_2px_0_0_#262626]';
   const variants = {
-    primary: 'bg-foreground text-white hover:opacity-90 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed',
-    secondary: 'bg-white text-foreground border-2 border-foreground hover:bg-foreground hover:text-white',
+    primary: 'bg-[#ff6601] disabled:bg-gray-300 disabled:cursor-not-allowed',
+    secondary: 'bg-white border-2 border-foreground hover:bg-foreground',
   };
 
   return (
@@ -24,6 +29,14 @@ export function Button({
       type={type}
       onClick={onClick}
       disabled={disabled}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{ 
+        fontSize: '22px', 
+        lineHeight: '32px',
+        fontWeight: 600,
+        color: isHovered && variant === 'primary' ? '#000000' : '#ffffff',
+      }}
       className={`${baseStyles} ${variants[variant]} ${className}`}
     >
       {children}
