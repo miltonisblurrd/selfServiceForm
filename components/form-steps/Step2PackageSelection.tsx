@@ -2,9 +2,11 @@
 
 import { useFormStore } from '@/store/form-store';
 import { services } from '@/config/services';
+import { muxVideos } from '@/config/mux-videos';
 import { PackageCard } from '../ui/PackageCard';
 import { Button } from '../ui/Button';
 import { PricingSummaryInline } from '../PricingSummaryInline';
+import { MuxVideoPlayer } from '../MuxVideoPlayer';
 
 export function Step2PackageSelection() {
   const selectedServiceIds = useFormStore((state) => state.selectedServiceIds);
@@ -90,16 +92,10 @@ export function Step2PackageSelection() {
           
           {/* Beige/Cream Content Area */}
           <div className="bg-[#FBFAF6] p-6">
-            <div className="flex items-center justify-center" style={{ height: '600px' }}>
-              <div className="text-center">
-                <div className="text-gray-500 text-sm font-mono mb-2">Video Preview</div>
-                <div className="w-16 h-16 mx-auto bg-gray-300 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
+            <MuxVideoPlayer 
+              playbackId={muxVideos.step2.playbackId}
+              title={muxVideos.step2.title}
+            />
           </div>
         </div>
       </div>

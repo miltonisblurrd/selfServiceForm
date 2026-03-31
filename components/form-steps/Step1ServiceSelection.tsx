@@ -2,9 +2,11 @@
 
 import { useFormStore } from '@/store/form-store';
 import { services } from '@/config/services';
+import { muxVideos } from '@/config/mux-videos';
 import { ServiceCard } from '../ui/ServiceCard';
 import { Button } from '../ui/Button';
 import { PricingSummaryInline } from '../PricingSummaryInline';
+import { MuxVideoPlayer } from '../MuxVideoPlayer';
 
 export function Step1ServiceSelection() {
   const selectedServiceIds = useFormStore((state) => state.selectedServiceIds);
