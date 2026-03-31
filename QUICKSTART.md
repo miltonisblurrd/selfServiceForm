@@ -1,105 +1,94 @@
-# Quick Setup Guide
+# Quick Start Guide - Self-Service Form
 
-## What's Built (Front-End Complete! ✅)
+## What You Have Now
 
-### ✅ Completed
-- Next.js 15 project with App Router
-- Webflow Cloud configuration (OpenNext, Wrangler, basePath)
-- 3-step form flow matching your screenshots
-- Sticky pricing sidebar ("Resume" panel)
-- Dark left sidebar with progress tracking
-- Mobile-responsive design
-- Zustand state management with localStorage auto-save
-- Service and package selection UI
-- Contract generation form with different signer support
-- Git repository initialized
+A complete 3-step self-service form that:
+1. Guides users to select services and packages
+2. Generates a professional PDF contract
+3. Emails the contract automatically
+4. Creates Stripe payment links
+5. Integrates Mux videos (when you add them)
 
-### 🔧 To Be Wired Up (Backend)
-- PDF generation (@react-pdf/renderer)
-- Email sending (Resend)
-- Stripe payment integration
-- API routes
+## What You Need to Do
 
-## Access Your Form
+### 1. Set Up Email (Resend) - 10 minutes
+```
+1. Sign up at resend.com
+2. Verify blurrdstudio.com domain
+3. Get API key
+4. Add to Webflow Cloud environment variables
+```
+👉 **Detailed guide**: `docs/RESEND_SETUP.md`
 
-**Local Development:**
-- URL: http://localhost:3001/self-serve
-- Dev server is running!
+### 2. Set Up Payments (Stripe) - 15 minutes
+```
+1. Sign up at stripe.com
+2. Complete business verification
+3. Get API key (test or live)
+4. Add to Webflow Cloud environment variables
+```
+👉 **Detailed guide**: `docs/STRIPE_SETUP.md`
 
-## Next Steps
+### 3. Add Videos (Mux) - Optional
+```
+1. Sign up at mux.com
+2. Upload 3 videos (one per form step)
+3. Get playback IDs
+4. Update config/mux-videos.ts
+5. Push to GitHub
+```
+👉 **Detailed guide**: `docs/MUX_SETUP.md`
 
-### 1. Test the UI Flow
+## Environment Variables
 
-Open http://localhost:3001/self-serve and test:
-- [ ] Select services (SEO & AEO, Technical Problem Solving)
-- [ ] See pricing update in sticky sidebar
-- [ ] Navigate to Step 2, select packages
-- [ ] Navigate to Step 3, fill in form
-- [ ] Toggle "I'm the signer" checkbox
-- [ ] Click "Generate Contract" (shows alert for now)
-
-### 2. Add Your Actual Services
-
-Edit `config/services.ts` to add all your real services and packages with:
-- Service names, descriptions, icons
-- Package pricing, timelines
-- What's included/not included lists
-
-### 3. Deploy to Webflow Cloud
-
-Follow steps in `DEPLOYMENT.md`:
-1. Create GitHub repository
-2. Push code: `git push -u origin main`
-3. Connect to Webflow Cloud in site settings
-4. Create project and environment (mount path: `/self-serve`)
-5. Set environment variables
-6. Publish site
-
-**That's it!** Your form will be live at `blurrdstudio.com/self-serve`
-
-### 4. Wire Up Backend (After Deployment)
-
-Once the front-end is deployed and looking good:
-- [ ] Setup Resend account and verify domain
-- [ ] Get Stripe API keys
-- [ ] Build PDF contract template
-- [ ] Create API routes for email and payment
-- [ ] Test end-to-end flow
-
-## Quick Commands
+Add these in **Webflow Cloud** → Site Settings → Environment Variables:
 
 ```bash
-# Development
-npm run dev                    # Start dev server (http://localhost:3000/self-serve)
-
-# Testing with Edge Runtime
-npm run preview                # Test with Wrangler (simulates Cloudflare Workers)
-
-# Deployment
-git add . && git commit -m "Update"
-git push                       # Auto-deploys to Webflow Cloud
-
-# Or manual deploy
-webflow auth login
-webflow cloud deploy --env production --mount /self-serve
+RESEND_API_KEY=re_your_key_here
+STRIPE_SECRET_KEY=sk_test_or_live_your_key_here
 ```
 
-## File Structure
+⚠️ **Important**: Add these BEFORE testing the form in production!
 
+## Deploy & Test
+
+### Deploy
+```bash
+git push origin main
 ```
-✅ app/self-serve/page.tsx          # Main form page
-✅ app/self-serve/confirmation/     # Post-payment confirmation
-✅ components/form-steps/           # 3 step components
-✅ components/Sidebar.tsx           # Left progress sidebar
-✅ components/PricingSummary.tsx    # Right sticky pricing
-✅ config/services.ts               # YOUR DATA GOES HERE
-✅ store/form-store.ts              # State management
-⏳ app/api/send-contract/          # TO BE BUILT
-⏳ app/api/create-payment/         # TO BE BUILT
-⏳ lib/contract-template.tsx       # TO BE BUILT
-```
+Webflow Cloud automatically rebuilds and deploys (2-3 minutes).
 
-## Need Help?
+### Test
+1. Visit: https://blurrdstudio.com/self-service-project-request
+2. Complete all 3 steps
+3. Generate contract (PDF downloads)
+4. Check email for contract
+5. Click payment link
+6. Test payment with: 4242 4242 4242 4242
 
-Check `README.md` for full documentation
-Check `DEPLOYMENT.md` for deployment steps
+## Current Status
+
+✅ **Frontend**: Live and working  
+✅ **PDF Generation**: Client-side, ready  
+✅ **Email API**: Built, needs Resend API key  
+✅ **Payment API**: Built, needs Stripe API key  
+⏳ **Videos**: Ready for Mux playback IDs (optional)
+
+## Next Actions
+
+1. **Add Resend API key** → Enables email delivery
+2. **Add Stripe API key** → Enables payments
+3. **Upload videos to Mux** → Replace placeholders (optional)
+4. **Test end-to-end** → Verify complete flow works
+
+## Support Files
+
+- `docs/DEPLOYMENT.md` - Full deployment guide
+- `docs/RESEND_SETUP.md` - Email setup instructions
+- `docs/STRIPE_SETUP.md` - Payment setup instructions
+- `docs/MUX_SETUP.md` - Video setup instructions
+- `.env.example` - Environment variable template
+
+## Questions?
+
+Check the docs folder or contact hello@blurrdstudio.com
